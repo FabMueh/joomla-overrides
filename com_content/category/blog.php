@@ -16,24 +16,14 @@ JHtml::_('behavior.caption');
 
     <!-- load blog posts -->
     <?php foreach($this->items as $post) : ?>
-        <div class="blog-post">
-
+        <div class="blog-item">
+            <h3 class="blog-title"><?php echo $post->title; ?></h3>
+            <div class="blog-text"><?php echo $post->introtext; ?></div>
+            
+            <!-- read more link -->
+            <?php $link = JRoute::_(ContentHelperRoute::getArticleRoute($post->slug, $post->catid, $post->language)); ?>
+            <a class="blog-readmore" href="<?php echo $link; ?>">weiterlesen</a>
         </div>
-
-        <!-- read more link -->
-        <?php if ($params->get('show_readmore') && $this->item->readmore) :
-	        if ($params->get('access-view')) :
-		        $link = JRoute::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
-	        else :
-                $menu = JFactory::getApplication()->getMenu();
-                $active = $menu->getActive();
-                $itemId = $active->id;
-                $link = new JUri(JRoute::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
-                $link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
-	        endif; ?>
-	        <a class="blog-readmore" href="<?php echo $link ?>">weiterlesen</a>
-        <?php endif; ?>
-
     <?php endforeach; ?>
 
 
@@ -45,4 +35,6 @@ JHtml::_('behavior.caption');
 	<?php endif; ?>
 
 </div>
+
+
 
