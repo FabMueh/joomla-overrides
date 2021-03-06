@@ -16,14 +16,17 @@ JHtml::_('behavior.caption');
 
     <!-- load blog posts -->
     <?php foreach($this->items as $post) : ?>
-        <div class="blog-item">
-            <h3 class="blog-title"><?php echo $post->title; ?></h3>
-            <div class="blog-text"><?php echo $post->introtext; ?></div>
-            
-            <!-- read more link -->
-            <?php $link = JRoute::_(ContentHelperRoute::getArticleRoute($post->slug, $post->catid, $post->language)); ?>
-            <a class="blog-readmore" href="<?php echo $link; ?>">weiterlesen</a>
-        </div>
+        <?php if($post->published == 1) : ?>
+            <div class="blog-item">
+                <h3 class="blog-title"><?php echo $post->title; ?></h3>
+                <span class="blog-published">vom <?php echo date_format(date_create($post->created), 'd.m.Y') ?></span>
+                <span class="blog-text"><?php echo $post->introtext; ?></span>
+                
+                <!-- read more link -->
+                <?php $link = JRoute::_(ContentHelperRoute::getArticleRoute($post->slug, $post->catid, $post->language)); ?>
+                <a class="blog-readmore" href="<?php echo $link; ?>">weiterlesen</a>
+            </div>
+        <?php endif; ?>
     <?php endforeach; ?>
 
 
@@ -35,6 +38,4 @@ JHtml::_('behavior.caption');
 	<?php endif; ?>
 
 </div>
-
-
 
